@@ -1,7 +1,6 @@
 class PicsController < ApplicationController
 
-  before_action :find_pic, only: [:show, :edit, :update, :destroy, :upvote]
-  
+  before_action :find_pic, only: [:show, :edit, :update, :destroy]
 
   def index
     @pics = Pic.all.order("created_at DESC")
@@ -11,16 +10,16 @@ class PicsController < ApplicationController
   end
 
   def new
-    @pic = Pic.new 
+    @pic = current_user.pics.build
   end
 
   def create 
-    @pic = Pic.new(pic_params)
+    @pic = current_user.pics.build(pic_params)
 
     if @pic.save
-        redirect_to @pic, notice: "Yesss! It was posted!"
+      redirect_to @pic, notice: "Yesss! It was posted!"
     else
-        render 'new'
+      render 'new'
     end
   end
 
@@ -29,9 +28,9 @@ class PicsController < ApplicationController
 
   def update
     if @pic.update(pic_params)
-        redirect_to @pic, notice: "Congrats! Pic was updated!"
+      redirect_to @pic, notice: "Congrats! Pic was updated!"
     else
-        render 'edit'
+      render 'edit'
     end
   end
 
@@ -40,11 +39,10 @@ class PicsController < ApplicationController
     redirect_to root_path
   end
 
-
-
   private
 
   def pic_params
+
     params.require(:pic).permit(:title, :description, :image)
   end
 
