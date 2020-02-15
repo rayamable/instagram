@@ -23,6 +23,7 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'paperclip'
 gem 'masonry-rails'
+gem 'acts_as_votable', '~> 0.12.1'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
